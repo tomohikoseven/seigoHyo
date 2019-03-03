@@ -1,6 +1,17 @@
 <!-- 検索欄 -->
+<form #myForm="ngForm" (ngSubmit)="show()">
+  <label for="search">Search</label>
+  <input id="search" name="search" [(ngModel)]="searchStr" #search="ngModel"/>
+  <input type="submit" value="Search" />
+</form>
 
 <!-- 新着 -->
+<div>
+  <ng-container *ngFor="let book of bookList" >
+    <p>{{book.title}}</p>
+  </ng-container>
+  <p>{{result}}</p>
+</div>
  
 <p>
   top works!
