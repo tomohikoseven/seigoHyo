@@ -11,13 +11,15 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TopComponent } from './top/top.component';
+import { ChatDatePipe } from './pipe/chat-date.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    TopComponent
+    TopComponent,
+    ChatDatePipe
   ],
   imports: [
     BrowserModule,
