@@ -1,4 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Comment, User } from '../class/chat';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'; // 追加
+import { Observable } from 'rxjs'; // 追加
+
+const CURRENT_USER: User = new User(1, 'Tanaka Jiro');
+const ANOTHER_USER: User = new User(2, 'Suzuki Taro');
+const COMMENTS: Comment[] = [
+  new Comment(ANOTHER_USER, 'Suzukiの１つ目のコメントです。'),
+  new Comment(ANOTHER_USER, 'Suzukiの2つ目のコメントです。'),
+  new Comment(CURRENT_USER, 'Tanakaの１つ目のコメントです。'),
+  new Comment(ANOTHER_USER, 'Suzukiの3つ目のコメントです。'),
+  new Comment(CURRENT_USER, 'Tanakaの2つ目のコメントです。')
+];
+
 
 class BookInfo {
   //image: string;
@@ -19,13 +33,31 @@ class BookInfo {
   styleUrls: ['./top.component.css']
 })
 export class TopComponent implements OnInit {
+  item: Observable<Comment>; // 追加
+  public content = '';
+  public comments = COMMENTS;
+  public current_user = CURRENT_USER;
+
   public searchStr: string;
   public result: string;
   public bookList: Array<BookInfo>;
 
-  constructor() { }
+  public userCollection: AngularFirestoreCollection<User>;
+  public users: Observable<User[]>;
+
+  // DI（依存性注入する機能を指定）
+  constructor(private db: AngularFirestore) {
+    this.item = db
+      .collection('comments')
+      .doc<Comment>('item')
+      .valueChanges();
+  }
 
   ngOnInit() {
+     this.userCollection = this.db.collection<User>('users');
+    console.log('test');
+     let users = this.userCollection.valueChanges();
+    console.log('test2');
   }
 
   show() {
@@ -34,7 +66,14 @@ export class TopComponent implements OnInit {
         new BookInfo('image1', 'seq1', 'タイトル1', '著者A')
         ,new BookInfo('image2', 'seq2', 'タイトル2', '著者B')
     ];
-    console.log('test');
+  }
+
+  // 新しいコメントを追加
+  addComment(comment: string) {
+     if (comment) {
+       this.comments.push(new Comment(this.current_user, comment));
+       this.content = '';
+     }
   }
 
 }

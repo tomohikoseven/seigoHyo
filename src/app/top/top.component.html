@@ -1,14 +1,22 @@
 <!-- 検索欄 -->
-<form #myForm="ngForm" (ngSubmit)="show()">
-  <label for="search">Search</label>
-  <input id="search" name="search" [(ngModel)]="searchStr" #search="ngModel"/>
-  <input type="submit" value="Search" />
-</form>
+  <div class="input-group col-sm-6">
+    <input type="text" class="form-control" placeholder="書籍名" [(ngModel)]="searchStr"/>
+    <div class="input-group-append">
+      <button class="btn btn-info" (click)="show()">Search</button>
+    </div>
+  </div>
 
 <!-- 新着 -->
 <div>
   <ng-container *ngFor="let book of bookList" >
     <p>{{book.title}} 著者:{{book.author}}</p>
+  </ng-container>
+</div>
+
+<div>
+  <ng-container *ngFor="let user of users | async " >
+    <p>address:{{user.address}}</p>
+    <p>passwd:{{user.passwd}}</p>
   </ng-container>
 </div>
 
@@ -45,6 +53,15 @@
       </div>
       <hr> 
     </div>
+  </section>
+
+  <section>
+    <form class="chart-form">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Comment">
+        <span class="input-group-btn"><button class="btn btn-info" type="button">SEND</button></span>
+      </div>
+    </form>
   </section>
  
 <p>
