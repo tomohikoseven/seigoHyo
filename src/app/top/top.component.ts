@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Comment, User } from '../class/chat';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'; // 追加
 import { Observable } from 'rxjs'; // 追加
+import { firebase } from 'firebaseui-angular';
+
+// Service
+import { LoginService } from '../services/login.service';
 
 const CURRENT_USER: User = new User(1, 'Tanaka Jiro');
 const ANOTHER_USER: User = new User(2, 'Suzuki Taro');
@@ -45,19 +49,21 @@ export class TopComponent implements OnInit {
   public userCollection: AngularFirestoreCollection<User>;
   public users: Observable<User[]>;
 
+ // public loginUser: Observable<firebase.User>;
+
   // DI（依存性注入する機能を指定）
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore
+             ,private loginService: LoginService) {
     this.item = db
       .collection('comments')
       .doc<Comment>('item')
       .valueChanges();
+ //   this.loginUser = this.loginService.user;
   }
 
   ngOnInit() {
      this.userCollection = this.db.collection<User>('users');
-    console.log('test');
      let users = this.userCollection.valueChanges();
-    console.log('test2');
   }
 
   show() {

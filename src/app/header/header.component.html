@@ -1,17 +1,36 @@
-    <nav class="navbar navbar-default is-dark" style="background-color: #99cc00;">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" routerLink="/">
-            <span>正誤表まとめ</span>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <div class="navbar-header">
+        <a routerLink="" class="navbar-brand">
+          <span>正誤表まとめ</span>
+        </a>
+        <a mat-button routerLink="search" class="header-button navbar-item">
+          <mat-icon>search</mat-icon>
+          <span>Search</span>
+        </a>
+        <a mat-button routerLink="book-regist" class="header-button navbar-item">
+          <mat-icon>book</mat-icon>
+          <span>Book regist</span>
+        </a>
+      </div>
+      <span class="fill-remaining-space"></span>
+      <div class="navbar-start">
+        <div *ngIf="(loginService.user | async ) as user; else elseBlock">
+          <a mat-button routerLink="account" class="header-button navbar-item">
+            <mat-icon>account_box</mat-icon>
+          </a>
+          <a mat-button (click)="logout()" class="header-button navbar-item">
+            Logout
           </a>
         </div>
-        <div class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item" routerLink="login">Login</a>
-          </div>
-        </div>
+        <ng-template #elseBlock>
+          <a mat-button routerLink="login" class="header-button navbar-item">
+            Login
+          </a>
+        </ng-template>
       </div>
-    </nav>
+    </mat-toolbar-row>
+  </mat-toolbar>
 
 
 

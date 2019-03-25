@@ -4,11 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environment'; // 追加
 import { AngularFireModule } from '@angular/fire'; // 追加
 import { AngularFirestoreModule } from '@angular/fire/firestore'; // 追加
-import { AngularFireAuthModule } from '@angular/fire/auth'; // 追加
-import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular'; // 追加
+//import { AngularFireAuthModule } from '@angular/fire/auth'; // 追加
+//import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular'; // 追加
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// bootstrap
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+// Material Design
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
@@ -17,9 +24,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { TopComponent } from './top/top.component';
 import { ChatDatePipe } from './pipe/chat-date.pipe';
 import { LoginComponent } from './login/login.component';
+import { SearchComponent } from './search/search.component';
 
+// Service
+import { LoginService } from './services/login.service';
+import { AccountComponent } from './account/account.component';
+import { BookRegistComponent } from './book-regist/book-regist.component';
+
+/*
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
-  autoUpgradeAnonymousUsers: false, // 匿名認証ユーザー自動アップグレード
+  autoUpgradeAnonymousUsers: true, // 匿名認証ユーザー自動アップグレード
   signInFlow: 'redirect', // redirect or popup
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -33,10 +47,11 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   ],
   tosUrl: 'aaa',
   privacyPolicyUrl: 'https://www.msn.com/ja-jp',
-  signInSuccessUrl: 'https://www.msn.com/ja-jp',
+  signInSuccessUrl: 'http://localhost:4200/',
   credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
   siteName: 'my-app', 
 };
+*/
 
 
 @NgModule({
@@ -46,19 +61,31 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     HeaderComponent,
     TopComponent,
     ChatDatePipe,
-    LoginComponent
+    LoginComponent,
+    AccountComponent,
+    SearchComponent,
+    BookRegistComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    BrowserAnimationsModule,
     FormsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatInputModule,
+    AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase), // 追加
     AngularFirestoreModule,
-    AngularFireAuthModule,  // angularfireのAuth用モジュール
-    FirebaseUIModule.forRoot(firebaseUiAuthConfig), // FirebaseUIのモジュール
-    NgbModule.forRoot()
+    //AngularFireAuthModule,  // angularfireのAuth用モジュール
+    //FirebaseUIModule.forRoot(firebaseUiAuthConfig), // FirebaseUIのモジュール
+    //NgbModule.forRoot(),
+    // Specify the ngx-auth-firebaseui library as an import
+    NgxAuthFirebaseUIModule.forRoot(environment.firebase)
   ],
-  providers: [],
+  providers: [LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

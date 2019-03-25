@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { setTheme } from 'ngx-bootstrap/utils';
+//import { setTheme } from 'ngx-bootstrap/utils';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ export class AppComponent {
 
 // DI（依存性注入する機能を指定）
   constructor() {
-    setTheme('bs4');
+    //setTheme('bs4');
   }
 
 }

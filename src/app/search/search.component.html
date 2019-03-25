@@ -1,0 +1,16 @@
+  <div fxLayout="colomn">
+    <mat-form-field>
+      <input matInput type="search" placeholder="Book name"/>
+    </mat-form-field>
+    <button mat-button color="primary" (click)="search()">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+  </div>
+
+  <div>
+    <ng-container *ngFor="let book of ( bookList | async ) ">
+      <p>{{book.title}}:{{book.author}}</p>
+    </ng-container>
+  </div>
+
